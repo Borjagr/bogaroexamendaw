@@ -1,0 +1,7 @@
+FROM phpmyadmin/phpmyadmin:latest
+
+ENV PMA_HOST=database
+ENV PMA_PORT=3306
+ENV MYSQL_USER=root
+ENV MYSQL_PASSWORD=root
+ENV MYSQL_ROOT_PASSWORD=root
