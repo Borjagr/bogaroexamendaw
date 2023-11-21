@@ -1,0 +1,39 @@
+version: "3"
+services:
+    database:
+        image: mysql:latest
+        ports: 
+            - "3306:3306"
+        #Habililta autenticación con contraseña desde mysql
+        command: --default-authentication-plugin=mysql_native_password 
+        #Variables de entorno
+        environment:
+            MYSQL_DATABASE: bogaro
+            MYSQL_PASSWORD: root
+            MYSQL_ROOT_PASSWORD:  root
+        volumes:
+            #sincronización bbdd
+            - c:\Users\daw2\Desktop\ExamenDAW:/docker-entrypoint-initdb.d
+        networks:
+            - default
+    web:
+        build: .
+        ports: 
+            - "8080:80"
+        volumes:
+            - c:\Users\daw2\Desktop\ExamenDAW:/var/www/html
+        links:
+            - database
+        #red de conexión de los contenedores
+        networks:
+            - default
+    adminphp:
+        image: phpmyadmin/phpmyadmin:latest
+        links:
+            - database
+        ports:
+            - "8000:80"
+        environment:
+            MYSQL_USER: root
+            MYSQL_PASSWORD: root
+            MYSQL_ROOT_PASSWORD: root
